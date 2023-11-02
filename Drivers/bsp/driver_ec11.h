@@ -4,7 +4,7 @@
 #include "main.h"
 
 typedef struct{
-    uint16_t cnt;
+    int16_t cnt;
     uint8_t button_status;
 }TypeDef_EC11;
 extern TypeDef_EC11 ec11;

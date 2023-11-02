@@ -108,8 +108,8 @@ int main(void)
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);//plate
     HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
     
-    pid_init(40, 0.5, 0);
-    set_pid_target(&pid, 90);
+    pid_init(80, 0.5, 0);
+    //set_pid_target(&pid, 90);
     OLED_Init();
     HAL_TIM_Base_Start_IT(&htim1);
     ec11_init();
@@ -129,6 +129,7 @@ int main(void)
       OLED_ShowFNum(0, 56, voltage[1], 4, 8, 1);
       OLED_ShowNum(58, 20, ec11.cnt, 3, 8, 1);
       OLED_ShowSNum(98, 56, pid.PID_out, 5, 8, 1);
+      OLED_ShowNum(98, 40, pid.Target, 3, 8, 1);
       OLED_Refresh();  
       printf("temp:%f\r\n", temp[HEATING_PLATE]);
 

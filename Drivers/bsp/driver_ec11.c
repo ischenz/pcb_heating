@@ -20,6 +20,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 void Get_Temp_cnt(void)
 {
-    ec11.cnt = TIM3->CNT * 5;
-    
+    int16_t cnt = 0;
+    cnt = TIM3->CNT * 5;
+    if(cnt > 300){
+        cnt = 300;
+        TIM3->CNT = 60;
+    } else if(cnt < 0){
+        cnt = 0;
+        TIM3->CNT = 0;
+    }
+    ec11.cnt = cnt;
 }
