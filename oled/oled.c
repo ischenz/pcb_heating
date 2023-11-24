@@ -1,8 +1,8 @@
 #include "oled.h"
 #include "stdlib.h"
-#include "oledfont.h"
 #include "delay.h"
 #include "i2c.h"
+#include "oledfont.h"
 
 #define __HARD_IIC
 
@@ -493,7 +493,7 @@ void OLED_ScrollDisplay(uint8_t num,uint8_t space,uint8_t mode)
 //sizex,sizey,图片长宽
 //BMP[]：要写入的图片数组
 //mode:0,反色显示;1,正常显示
-void OLED_ShowPicture(uint8_t x,uint8_t y,uint8_t sizex,uint8_t sizey,uint8_t BMP[],uint8_t mode)
+void OLED_ShowPicture(uint8_t x,uint8_t y,uint8_t sizex,uint8_t sizey,const uint8_t BMP[],uint8_t mode)
 {
 	uint16_t j=0;
 	uint8_t i,n,temp,m;

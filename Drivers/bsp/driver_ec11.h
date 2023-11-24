@@ -10,7 +10,13 @@ typedef struct{
 extern TypeDef_EC11 ec11;
 
 void ec11_init(void);
-void Get_Temp_cnt(void);
+
+/*
+ ******************** beep ***************************
+ *****************************************************
+**/
+void rotary_beep(void);
+
 
 #endif /* __DRIVER_EC11_H */
 

@@ -20,13 +20,6 @@ void bsp_adc_init(void)
 
 void ADC_timer_callback(void)
 {
-    static uint16_t led_status;        
-    led_status = !led_status;
-    if(led_status != 0){
-        htim2.Instance->CCR1 = 1000;
-    }else{
-        htim2.Instance->CCR1 = 0;
-    }
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADC_Value, sizeof(ADC_Value) / sizeof(ADC_Value[0]));
 }
 
@@ -41,7 +34,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     voltage[0] = (ADC_Value[0]+1)*3.3/4096;
     R_rnt[0] = 10/((5/voltage[0])-1);
     temp[0] = Get_Temp(R_rnt[0], R25_1, B_1);
-    
 }
 
 float Get_Temp(float rnt, float R25, float B)

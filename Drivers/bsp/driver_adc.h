@@ -13,6 +13,7 @@
 #define PCB             0
 #define VCC             1
 #define HEATING_PLATE   2
+
 #define T25             298.15
 #define Ka              273.15
 #define R25_1           10.0   //pcb

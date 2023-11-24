@@ -34,6 +34,7 @@
 #include "mytimer.h"
 #include "driver_ec11.h"
 #include "pid.h"
+#include "control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -116,27 +117,23 @@ int main(void)
     bsp_adc_init();
     
 
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
+    Hello();
   while (1)
   {
-      OLED_ShowNum(50, 30, temp[2], 3, 24, 1);
-      OLED_ShowNum(110, 0, temp[0], 3, 8, 1);
-      OLED_ShowFNum(0, 56, voltage[1], 4, 8, 1);
-      OLED_ShowNum(58, 20, ec11.cnt, 3, 8, 1);
-      OLED_ShowSNum(98, 56, pid.PID_out, 5, 8, 1);
-      OLED_ShowNum(98, 40, pid.Target, 3, 8, 1);
-      OLED_Refresh();  
-      printf("temp:%f\r\n", temp[HEATING_PLATE]);
-
+      static unsigned int i;//80ms
+      i++;
+      show_main_win();
+      EncoderAction();
+      if(i % 20 == 0){
+        printf("T(main)=%4.1f, T(pcb)=%4.1f, V(input)=%4.1f, V(main)=%4.2f, V(pcb)=%4.2f, P=%5.1f, R(main)=%6.2fK, R(pcb)=%5.2fK \r\n", temp[HEATING_PLATE], temp[PCB], voltage[VCC], voltage[HEATING_PLATE], voltage[PCB], pid.PID_out, R_rnt[HEATING_PLATE], R_rnt[PCB]);  
+      }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    Get_Temp_cnt();
   }
   /* USER CODE END 3 */
 }

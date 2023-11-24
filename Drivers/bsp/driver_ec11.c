@@ -1,14 +1,17 @@
 #include "driver_ec11.h"
 #include "tim.h"
 #include "pid.h"
+#include "delay.h"
 
-TypeDef_EC11 ec11;
+TypeDef_EC11 ec11 = {
+    .cnt = 0,
+    .button_status = 0
+};
 
 void ec11_init(void)
 {
     HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
     __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
-    
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
@@ -18,16 +21,15 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     }
 }
 
-void Get_Temp_cnt(void)
+
+/*
+ ******************** beep ***************************
+ *****************************************************
+**/
+void rotary_beep(void)
 {
-    int16_t cnt = 0;
-    cnt = TIM3->CNT * 5;
-    if(cnt > 300){
-        cnt = 300;
-        TIM3->CNT = 60;
-    } else if(cnt < 0){
-        cnt = 0;
-        TIM3->CNT = 0;
-    }
-    ec11.cnt = cnt;
+    HAL_GPIO_WritePin(beep_GPIO_Port, beep_Pin, GPIO_PIN_RESET);
+    delay_ms(1);
+    HAL_GPIO_WritePin(beep_GPIO_Port, beep_Pin, GPIO_PIN_SET);
 }
+

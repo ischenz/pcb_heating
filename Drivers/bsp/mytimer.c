@@ -1,23 +1,8 @@
 #include "mytimer.h"
 #include "driver_adc.h"
 #include "pid.h"
-/*
- * 100ms
-*/
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-    static uint32_t i = 0;
-    if(htim->Instance == TIM1){
-        i++;
-        if( i%5 == 0 ){//500ms
-            ADC_timer_callback();   
-            pid_calculate(&pid, temp[HEATING_PLATE]);
-            load_pwm(pid.PID_out);
-        }     
-    }
-}
 
-void load_pwm(float pwm)
+void load_pwm(uint8_t channel, float pwm)
 {
     /*limit*/
     float load_pwm = pwm;
@@ -26,6 +11,12 @@ void load_pwm(float pwm)
     } else if(load_pwm < 0){
         load_pwm = 0;
     }
-    TIM2->CCR3 = load_pwm;
+    if(channel == main_pwm)
+        TIM2->CCR3 = load_pwm;
+    else if(channel == fan_pwm)
+        TIM2->CCR4 = load_pwm;
+    else if(channel == led_pwm){
+        TIM2->CCR1 = load_pwm;
+    }
 }
     
