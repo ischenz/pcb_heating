@@ -35,6 +35,7 @@
 #include "driver_ec11.h"
 #include "pid.h"
 #include "control.h"
+#include "Dino.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -125,12 +126,34 @@ int main(void)
   while (1)
   {
       static unsigned int i;//80ms
-      i++;
-      show_main_win();
-      EncoderAction();
-      if(i % 20 == 0){
-        printf("T(main)=%4.1f, T(pcb)=%4.1f, V(input)=%4.1f, V(main)=%4.2f, V(pcb)=%4.2f, P=%5.1f, R(main)=%6.2fK, R(pcb)=%5.2fK \r\n", temp[HEATING_PLATE], temp[PCB], voltage[VCC], voltage[HEATING_PLATE], voltage[PCB], pid.PID_out, R_rnt[HEATING_PLATE], R_rnt[PCB]);  
+      static uint8_t DinoStatus;
+      uint8_t ret = 0;
+      if(DinoStatus == 0){
+          i++;
+          show_main_win();
+          EncoderAction();
+          if(i % 20 == 0){
+            printf("T(main)=%4.1f, T(pcb)=%4.1f, V(input)=%4.1f, V(main)=%4.2f, V(pcb)=%4.2f, P=%5.1f, R(main)=%6.2fK, R(pcb)=%5.2fK \r\n", temp[HEATING_PLATE], temp[PCB], voltage[VCC], voltage[HEATING_PLATE], voltage[PCB], pid.PID_out, R_rnt[HEATING_PLATE], R_rnt[PCB]);  
+          }   
+          if (HAL_GPIO_ReadPin(EC11_BTN_GPIO_Port, EC11_BTN_Pin) == GPIO_PIN_RESET) {
+            DinoStatus = 1;
+            introMessage();
+          }
+      }else{
+        if (HAL_GPIO_ReadPin(EC11_BTN_GPIO_Port, EC11_BTN_Pin) == GPIO_PIN_RESET) {
+          showLine();
+          ret = play();
+          if(ret == 1){
+            while(HAL_GPIO_ReadPin(EC11_BTN_GPIO_Port, EC11_BTN_Pin) != GPIO_PIN_RESET);
+            DinoStatus = 0;
+          }
+          HAL_Delay(300);
+            
+        }         
       }
+
+
+     
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

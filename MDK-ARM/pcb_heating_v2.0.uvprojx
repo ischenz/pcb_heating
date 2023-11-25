@@ -337,10 +337,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--locale=english</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103x6</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../oled;../Drivers/bsp</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;../oled;../Drivers/bsp;..\Dino;..\Dino\Dino_bmp;..\Dino\Dino_bmp\Original;..\Dino\Dino_bmp\Rescaled</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -894,6 +894,26 @@
               <FileName>oled.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\oled\oled.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Dino</GroupName>
+          <Files>
+            <File>
+              <FileName>Dino.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Dino\Dino.c</FilePath>
+            </File>
+            <File>
+              <FileName>DionOled.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Dino\DionOled.c</FilePath>
+            </File>
+            <File>
+              <FileName>font.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Dino\font.c</FilePath>
             </File>
           </Files>
         </Group>

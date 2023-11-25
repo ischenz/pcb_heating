@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "delay.h"
 #include "i2c.h"
-#include "oledfont.h"
+#include "font.h"
 
 #define __HARD_IIC
 
@@ -286,13 +286,13 @@ void OLED_ShowChar(uint8_t x,uint8_t y,uint8_t chr,uint8_t size1,uint8_t mode)
 	for(i=0;i<size2;i++)
 	{
 		if(size1==8)
-			  {temp=asc2_0806[chr1][i];} //调用0806字体
+			  {temp=ascii_8x6[chr1][i];} //调用0806字体
 		else if(size1==12)
-        {temp=asc2_1206[chr1][i];} //调用1206字体
+        {temp=ascii_12x6[chr1][i];} //调用1206字体
 		else if(size1==16)
-        {temp=asc2_1608[chr1][i];} //调用1608字体
+        {temp=ascii_16x8[chr1][i];} //调用1608字体
 		else if(size1==24)
-        {temp=asc2_2412[chr1][i];} //调用2412字体
+        {temp=ascii_24x12[chr1][i];} //调用2412字体
 		else return;
 		for(m=0;m<8;m++)
 		{
